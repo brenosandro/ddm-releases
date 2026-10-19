@@ -9,7 +9,7 @@ dados, backups, firewall e um Mapa visual da sua infraestrutura. **Grátis para 
 
 ## 1. Antes de começar
 
-Você precisa de um servidor Linux (VPS, máquina na nuvem ou servidor em casa):
+Você precisa de um servidor Linux (VPS, máquina na nuvem ou servidor em casa). No Windows, veja a [seção 2b](#2b-no-windows).
 
 | Item | Requisito |
 |---|---|
@@ -47,6 +47,33 @@ DDM 1.0.0 instalado em painel.suaempresa.com.
 Primeiro acesso do dono — abra no navegador (vale UMA vez, por 1 hora):
   https://painel.suaempresa.com/setup?token=…
 ```
+
+## 2b. No Windows
+
+Abra o **PowerShell como administrador** (botão direito no menu Iniciar → **Terminal (Administrador)**) e rode:
+
+```powershell
+irm https://ddm.datatoms.com/install.ps1 | iex
+```
+
+O instalador pergunta o papel deste computador:
+
+- **1) Painel neste PC** — Windows 10 22H2 ou 11. Pede o seu e-mail (você será o dono) e sobe o painel em
+  **https://localhost:8443**, com o link de primeiro acesso no fim.
+- **2) Servidor Windows gerenciado** — Windows Server 2022 ou 2025 ligado a um painel que já existe. Pede o endereço
+  do painel e o token de **Servidores → Adicionar** (digitado sem aparecer na tela) e instala o agente como serviço.
+
+Antes de baixar qualquer coisa ele confere os pré-requisitos e diz o que instalar quando falta algo:
+
+| Falta | Como instalar |
+|---|---|
+| PowerShell 7.4 (painel) | `winget install --id Microsoft.PowerShell --source winget` |
+| WSL2 (painel) | `wsl --install` como administrador e reiniciar |
+| Docker Desktop (painel) | `winget install --id Docker.DockerDesktop`, abrir e deixar em contêineres Linux (WSL2) |
+
+Como no Linux, ele **confere a assinatura digital e o SHA-256 de cada arquivo antes de executar qualquer coisa** e
+para com "Nada foi instalado" se algo não bater. Para só conferir: `$env:DDM_DRY_RUN = '1'` antes do comando.
+Guia completo: **https://ddm.datatoms.com/docs/pt-br/comecar/instalar/#no-windows**
 
 ## 3. Primeiro acesso
 
@@ -88,6 +115,11 @@ minisign -Vm SHA256SUMS -P RWRiJyDv3tTHmvsta4m6nFp4Rz4Bbe3bej/Ip8mVSAYNIpUeKlxOq
 sha256sum --check --ignore-missing SHA256SUMS
 sudo sh install.sh --version "$V" && sudo ddm install
 ```
+
+**No Windows, conferindo o script antes de rodar:** baixe `install-windows.ps1`, `SHA256SUMS` e `SHA256SUMS.minisig`
+da release, confira com `minisign -Vm SHA256SUMS -P <chave abaixo>` e `(Get-FileHash .\install-windows.ps1).Hash`
+(igual à linha dele em `SHA256SUMS`) e rode `Get-Content -Raw .\install-windows.ps1 | iex`. Os scripts ainda não têm
+assinatura Authenticode; a garantia é a assinatura minisign da lista.
 
 Chave pública do projeto (`9AC7D4DEEF202762`): `RWRiJyDv3tTHmvsta4m6nFp4Rz4Bbe3bej/Ip8mVSAYNIpUeKlxOqN4Z`
 
