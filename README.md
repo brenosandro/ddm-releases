@@ -5,6 +5,19 @@ dados, backups, firewall e um Mapa visual da sua infraestrutura. **Grátis para 
 
 🌐 Site e documentação: **https://ddm.datatoms.com** · 📦 Downloads: [Releases](https://github.com/brenosandro/ddm-releases/releases)
 
+**Versão atual: [1.0.9](https://github.com/brenosandro/ddm-releases/releases/latest).** Já tem o DDM instalado?
+Atualize com `sudo ddm upgrade --version 1.0.9`. A atualização confere a assinatura e volta sozinha se algo falhar.
+
+Novidades recentes:
+
+- **Aplicativos publicados por túnel da Cloudflare:** sem abrir portas, ao lado de outro painel (como o Coolify) e
+  sem mexer nele.
+- **Configurações reorganizadas** e telas que usam a largura toda.
+- **IA conectada pelo MCP publica um app de ponta a ponta.** Criar o túnel e trocar o domínio passam pela sua
+  aprovação.
+
+Veja o histórico completo em [Releases](https://github.com/brenosandro/ddm-releases/releases).
+
 ---
 
 ## 1. Antes de começar
@@ -43,7 +56,7 @@ O que acontece:
 Leva poucos minutos. No fim aparece algo assim:
 
 ```
-DDM 1.0.0 instalado em painel.suaempresa.com.
+DDM 1.0.9 instalado em painel.suaempresa.com.
 Primeiro acesso do dono — abra no navegador (vale UMA vez, por 1 hora):
   https://painel.suaempresa.com/setup?token=…
 ```
@@ -109,7 +122,7 @@ sudo ddm install --domain painel.suaempresa.com --owner-email voce@suaempresa.co
 **Prefere conferir tudo à mão (sem `curl | bash`)?**
 
 ```sh
-V=1.0.0; B=https://github.com/brenosandro/ddm-releases/releases/download/v$V
+V=1.0.9; B=https://github.com/brenosandro/ddm-releases/releases/download/v$V
 curl -fsSLO "$B/install.sh" -O "$B/SHA256SUMS" -O "$B/SHA256SUMS.minisig"
 minisign -Vm SHA256SUMS -P RWRiJyDv3tTHmvsta4m6nFp4Rz4Bbe3bej/Ip8mVSAYNIpUeKlxOqN4Z
 sha256sum --check --ignore-missing SHA256SUMS
